@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}BigIce{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Hello, {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h1>
+    {% if not known %}
+    <p>Pleased to meet you!</p>
+    {% else %}
+    <p>Happy to see you again!</p>
+    {% endif %}
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>from user name</th>
+      <th>to user name</th>
+      <th>content</th>
+      <th>timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for message in messages.items %}
+    <tr>
+      <th scope="row">{{message.id}}</th>
+      <td>{{message.from_user_name|truncate(16,True)}}</td>
+      <td>{{message.to_user_name|truncate(16,True)}}</td>
+      <td>{{message.content}}</td>
+      <td>{{message.timestamp|datetime}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div>
+  {% for page in messages.iter_pages() %}
+    {% if page %}
+	{% if page!=messages.page %}
+	    <a href="{{ url_for('index',page=page)}}">{{page}}</a>
+	{% else %}
+	    <strong>{{page}}</strong>
+	{% endif %}
+    {% else %}
+    <span class="cllipsis">...</span>
+    {% endif %}
+  {% endfor %}
+</div>
+{% endblock %}
