@@ -35,8 +35,8 @@ class DatabaseManager(object):
 
 
 def create_schema():
-    # db_filename = 'bigice.db'
-    # schema_filename = 'schema.sql'
+    db_filename = 'bigice.db'
+    schema_filename = 'schema.sql'
 
     with sqlite3.connect(db_filename) as conn:
         print('Creating schema')

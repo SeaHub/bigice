@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
 # # -*- coding: utf-8 -*-
 # author:Samray <samrayleung@gmail.com>
-import pdb
-import sqlite3
-import time
 
 # 使用微软的小冰作为智能回复的 AI, 因为微软没有开放小冰的 api, 但是有接入到微博
 # 和微信平台，所以就要利用微信公众号接口调用小冰
 import itchat
-from db import DatabaseManager, insert_text_message
+from VersionC.db import DatabaseManager, insert_text_message
 from itchat.content import (ATTACHMENT, CARD, MAP, NOTE, PICTURE, RECORDING,
                             SHARING, TEXT, VIDEO)
-from manager import db_filename, schema_filename
+
+from VersionC.db import DB_FILENAME, SCHEMA_FILENAME
 
 global name
-dbmgr = DatabaseManager(db_filename, schema_filename)
+db_mgr = DatabaseManager(DB_FILENAME, SCHEMA_FILENAME)
 """
 def msg_register(self, msgType,
         isFriendChat=False, isGroupChat=False, isMpChat=False):
@@ -42,7 +40,7 @@ def send(self, msg, toUserName=None, mediaId=None):
 #  将文字等信息转发给小冰
 def send_xiaoice(msg):
     # 保存对话到数据库
-    insert_text_message(db_filename, msg)
+    insert_text_message(DB_FILENAME, msg)
     global name
     name = msg['FromUserName']
     xb = itchat.search_mps(name='小冰')[0]
@@ -57,7 +55,7 @@ def send_xiaoice(msg):
     name = msg['FromUserName']
     msg['Text'](msg['FileName'])
     xb = itchat.search_mps(name='小冰')[0]
-    print("{}: send you a pitcure".format(name))
+    print("{}: send you a picture".format(name))
     itchat.send('@%s@%s' % ({'Picture': 'img', 'Video': 'vid'}.get(
         msg['Type'], 'fil'), msg['FileName']), xb['UserName'])
 
@@ -65,7 +63,7 @@ def send_xiaoice(msg):
 @itchat.msg_register([TEXT, MAP, CARD, NOTE, SHARING], False, False, True)
 # 将小冰回复的文字等信息转发给发送者
 def send_reply(msg):
-    insert_text_message(db_filename, msg)
+    insert_text_message(DB_FILENAME, msg)
     global name
     print("xiaoice reply: ", msg['Text'])
     itchat.send(msg['Text'], name)

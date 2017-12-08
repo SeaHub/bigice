@@ -16,8 +16,7 @@ app = Flask(__name__)
 @app.route("/chatbot")
 def get_response():
     user_input = request.args.get('user_input')
-    response = {}
-    response['reply'] = deepThought.get_response(user_input).text
+    response = {'reply': deepThought.get_response(user_input).text}
     return jsonify(response)
 
 

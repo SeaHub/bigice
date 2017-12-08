@@ -55,12 +55,12 @@ def index(page=1):
                            form=form, name=name, messages=messages)
 
 
-def unixtime_to_datetime(value):
+def unix_time_to_datetime(value):
     if value:
         return datetime.fromtimestamp(int(value)).strftime('%Y-%m-%d %H:%M:%S')
 
 
-app.jinja_env.filters['datetime'] = unixtime_to_datetime
+app.jinja_env.filters['datetime'] = unix_time_to_datetime
 
 
 def make_shell_context():
@@ -71,5 +71,5 @@ manager.add_command("shell", Shell(make_context=make_shell_context))
 
 
 if __name__ == "__main__":
-    # app.run(debug=True)
-    manager.run()
+    app.run(debug=True)
+    # manager.run()

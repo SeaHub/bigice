@@ -1,12 +1,11 @@
 # coding=utf8
 import json
 import random
-
 import itchat
 import requests
 
-from reply import (ATTACHMENT_REPLY, CARD_REPLY, MAP_REPLY, NOTE_REPLY,
-                   PICTURE_REPLY, RECORDING_REPLY, SHARING_REPLY, VIDEO_REPLY)
+from VersionB.reply import (ATTACHMENT_REPLY, CARD_REPLY, MAP_REPLY, NOTE_REPLY,
+                            PICTURE_REPLY, RECORDING_REPLY, SHARING_REPLY, VIDEO_REPLY)
 
 try:
     with open('tuling.json') as f:
@@ -17,13 +16,15 @@ except:
         'There is something wrong with tuling.json')
 
 
-def get_response(msg, storageClass=None, userName=None, userid='samray'):
+def get_response(msg, storage_class=None, username=None, userid='samray'):
     url = 'http://www.tuling123.com/openapi/api'
     payloads = {
         'key': key,
         'info': msg,
         'userid': userid,
     }
+
+    # noinspection PyBroadException
     try:
         r = requests.post(url, data=json.dumps(payloads)).json()
     except:
