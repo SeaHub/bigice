@@ -1,6 +1,9 @@
+#!/usr/bin/env python3
+# # -*- coding: utf-8 -*-
+# author:Samray <samrayleung@gmail.com>
+
 import os
 from datetime import datetime
-
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
@@ -41,7 +44,6 @@ class NameForm(Form):
     name = StringField('What is your name?', validators=[Required()])
     submit = SubmitField('Submit')
 
-
 @app.route("/<int:page>", methods=['GET', 'POST'])
 def index(page=1):
     per_page = 10
@@ -54,21 +56,16 @@ def index(page=1):
     return render_template('index.html',
                            form=form, name=name, messages=messages)
 
-
 def unix_time_to_datetime(value):
     if value:
         return datetime.fromtimestamp(int(value)).strftime('%Y-%m-%d %H:%M:%S')
 
-
 app.jinja_env.filters['datetime'] = unix_time_to_datetime
-
 
 def make_shell_context():
     return dict(app=app, db=db, Message=Message)
 
-
 manager.add_command("shell", Shell(make_context=make_shell_context))
-
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+# # -*- coding: utf-8 -*-
+# author:Samray <samrayleung@gmail.com>
+
 import os
 import sqlite3
 import time

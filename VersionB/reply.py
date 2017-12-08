@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 # # -*- coding: utf-8 -*-
 # author:Samray <samrayleung@gmail.com>
+
 # 对于那些 mimetypes 的文件，没办法像文本材料那样根据语意回复，所以只能设定对应
 # 的回复了。yes, hardcode
+
+ABOUT_REPLY = u'Hello，我是大冰，你可以在这里了解我的爸爸：https://github.com/samrayleung'
+
 PICTURE_REPLY = [
     u"你是想要斗图么",
     u"我手中的表情包已经饥渴难耐了",

@@ -47,7 +47,6 @@ def send_xiaoice(msg):
     print("{}: ".format(name), msg['Text'])
     itchat.send(msg['Text'], xb['UserName'])
 
-
 @itchat.msg_register([PICTURE, RECORDING, ATTACHMENT, VIDEO], True, False, False)
 # 将图片等信息转发给小冰
 def send_xiaoice(msg):
@@ -59,7 +58,6 @@ def send_xiaoice(msg):
     itchat.send('@%s@%s' % ({'Picture': 'img', 'Video': 'vid'}.get(
         msg['Type'], 'fil'), msg['FileName']), xb['UserName'])
 
-
 @itchat.msg_register([TEXT, MAP, CARD, NOTE, SHARING], False, False, True)
 # 将小冰回复的文字等信息转发给发送者
 def send_reply(msg):
@@ -67,7 +65,6 @@ def send_reply(msg):
     global name
     print("xiaoice reply: ", msg['Text'])
     itchat.send(msg['Text'], name)
-
 
 @itchat.msg_register([PICTURE, RECORDING, ATTACHMENT, VIDEO], False, False, True)
 # 将小冰回复的图片等信息转发给发送者
@@ -77,12 +74,10 @@ def send_reply(msg):
     itchat.send('@%s@%s' % ({'Picture': 'img', 'Video': 'vid'}.get(
         msg['Type'], 'fil'), msg['FileName']), name)
 
-
 @itchat.msg_register('Friends')
 def add_friend(msg):
     itchat.add_friend(**msg['Text'])
     itchat.send_msg(u' 就知道你想勾搭我', msg['RecommendInfo']['UserName'])
-
 
 itchat.auto_login(enableCmdQR=2)
 itchat.run()

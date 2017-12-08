@@ -1,18 +1,21 @@
+#!/usr/bin/env python3
+# # -*- coding: utf-8 -*-
+# author:Samray <samrayleung@gmail.com>
+
 from __future__ import unicode_literals
 
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
 
-deepThought = ChatBot("Training demo")
-deepThought.set_trainer(ListTrainer)
-deepThought.train([
-    "嗳，渡边君，真喜欢我?",
-    "那还用说?",
-    "那么，可依得我两件事?",
-    "三件也依得",
-])
+deep_thought = ChatBot("Training demo")
+deep_thought.set_trainer(ListTrainer)
 
+def start_training(train_data):
+    if isinstance(train_data, list):
+        deep_thought.train(train_data)
+    else:
+        raise TypeError("Train_data need to be 'list' type")
 
-# test
-print(deepThought.get_response("真喜欢我?"))
-print(deepThought.get_response("可依得我两件事?"))
+def get_response(request_data):
+    return deep_thought.get_response(request_data).text
+

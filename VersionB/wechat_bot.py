@@ -1,11 +1,15 @@
-# coding=utf8
+#!/usr/bin/env python3
+# # -*- coding: utf-8 -*-
+# author:Samray <samrayleung@gmail.com>
+
 import json
 import random
 import itchat
 import requests
 
 from VersionB.reply import (ATTACHMENT_REPLY, CARD_REPLY, MAP_REPLY, NOTE_REPLY,
-                            PICTURE_REPLY, RECORDING_REPLY, SHARING_REPLY, VIDEO_REPLY)
+                            PICTURE_REPLY, RECORDING_REPLY, SHARING_REPLY, VIDEO_REPLY,
+                            ABOUT_REPLY)
 
 try:
     with open('tuling.json') as f:
@@ -50,26 +54,20 @@ def get_response(msg, storage_class=None, username=None, userid='samray'):
     elif r['code'] == 314000:  # 诗词类
         return '\n'.join([r['text'].replace('<br>', '\n')])
 
-
 @itchat.msg_register('Text')
 def text_reply(msg):
     if u"关于" in msg['Text'] or u"主人" in msg['Text']:
-        return u'你可以在这里了解他：https://github.com/samrayleung'
-    elif u"感谢" in msg['Text'] or u"致谢" in msg['Text'] or u"参考" in msg['Text']:
-        return u"感谢 littlecodersh, 谢谢他的分享：https://github.com/littlecodersh"
+        return ABOUT_REPLY
     else:
         return get_response(msg['Text']) or u'收到：' + msg['Text']
-
 
 @itchat.msg_register('Picture')
 def image_reply(msg):
     return random.choice(PICTURE_REPLY)
 
-
 @itchat.msg_register('Recording')
 def recording_reply(msg):
     return random.choice(RECORDING_REPLY)
-
 
 @itchat.msg_register('Attachment')
 def attachment_reply(msg):
@@ -108,16 +106,16 @@ def group_reply(msg):
                                  get_response(msg['Text']) or u'收到：' + msg['Text'])
 
 
-def getText(msg):
+def get_text(msg):
     if msg['Type'] == 'Text':
         return msg['Text']
     else:
         return "发送的其他类型回复"
 
 
-def xbAnswer(msg):
+def xiaoice_answer(msg):
     xb = itchat.search_mps(name='小冰')[0]
-    quest = getText(msg)
+    quest = get_text(msg)
     if msg['Type'] == 'Picture':
         msg['Text'](msg['FileName'])
         itchat.send_image(msg['FileName'], xb['UserName'])
@@ -130,6 +128,10 @@ def add_friend(msg):
     itchat.add_friend(**msg['Text'])
     itchat.send_msg(u'Nice to meet you', msg['RecommendInfo']['UserName'])
 
+def run():
+    itchat.auto_login(True, enableCmdQR=2)
+    itchat.run()
+    return True
 
-itchat.auto_login(True, enableCmdQR=2)
-itchat.run()
+if __name__ == "__main__":
+    run()

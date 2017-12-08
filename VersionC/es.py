@@ -1,5 +1,8 @@
-from datetime import datetime
+#!/usr/bin/env python3
+# # -*- coding: utf-8 -*-
+# author:Samray <samrayleung@gmail.com>
 
+from datetime import datetime
 from elasticsearch_dsl import Date, DocType, Integer, Keyword, Text
 from elasticsearch_dsl.connections import connections
 
